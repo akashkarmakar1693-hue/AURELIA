@@ -52,7 +52,7 @@ export default function PropertiesHero() {
           { opacity: 1, duration: 1.6, ease: "power2.out" },
           0.3
         )
-        // Eyebrow: tracking tightens as it lands (established AURELIA reveal).
+        // Eyebrow: tracking tightens as it lands (established AURELIS reveal).
         .fromTo(
           ".props-hero__eyebrow",
           { opacity: 0, y: 16, letterSpacing: "0.5em" },
@@ -164,7 +164,7 @@ export default function PropertiesHero() {
         <div className="props-hero__rule-h" aria-hidden="true" />
 
         <div className="props-hero__titleblock mt-14">
-          <p className="props-hero__eyebrow">The Aurelia Collection</p>
+          <p className="props-hero__eyebrow">The Aurelis Collection</p>
           <h1 id="properties-hero-title" className="props-hero__title">
             <span className="props-hero__line">
               <span>Residences of</span>

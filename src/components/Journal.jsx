@@ -217,7 +217,7 @@ export default function Journal() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="journal" aria-label="Aurelia journal">
+    <section ref={sectionRef} className="journal" aria-label="Aurelis journal">
       <div className="journal__stage" ref={stageRef}>
         {/* Visual plate. The Home section-handoff owns this element's
             transform/clip; the pin trigger above stays untransformed so its

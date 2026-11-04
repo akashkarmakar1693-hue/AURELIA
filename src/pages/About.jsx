@@ -8,7 +8,7 @@ import AboutCollection from "../components/about/AboutCollection";
 // context, composed in order: perspective, philosophy, curation, collection.
 export default function About() {
   return (
-    <article className="about" aria-label="About AURELIA">
+    <article className="about" aria-label="About AURELIS">
       <AboutHero />
       <AboutPhilosophy />
       <AboutCuration />

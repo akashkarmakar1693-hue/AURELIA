@@ -364,7 +364,7 @@ export default function PropertiesRail() {
       aria-labelledby="collection-title"
     >
       <div className="collection__intro">
-        <p className="collection__eyebrow">AURELIA / Private Residences</p>
+        <p className="collection__eyebrow">AURELIS / Private Residences</p>
         <h2 id="collection-title" className="collection__title">
           <span className="collection__title-line">
             <span>Homes of quiet</span>

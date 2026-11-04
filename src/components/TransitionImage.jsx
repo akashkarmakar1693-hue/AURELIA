@@ -6,7 +6,7 @@ const TRANSITION_IMAGE = "/images/architecture-statement.jpg";
 // owned by the transition stage in Home (single scrubbed GSAP timeline).
 export default function TransitionImage() {
   return (
-    <section className="transition" aria-label="Aurelia">
+    <section className="transition" aria-label="Aurelis">
       <div className="transition__image">
         <img
           src={TRANSITION_IMAGE}
@@ -23,7 +23,7 @@ export default function TransitionImage() {
       <div className="transition__veil" aria-hidden="true" />
 
       <div className="transition__content">
-        <p className="transition__eyebrow">AURELIA / PRIVATE RESIDENCES</p>
+        <p className="transition__eyebrow">AURELIS / PRIVATE RESIDENCES</p>
         <h2 className="transition__headline">
           <span className="transition__headline-inner">
             Architecture shaped around the way you live.
@@ -33,7 +33,7 @@ export default function TransitionImage() {
           Considered residences shaped by architecture, landscape and place.
         </p>
         <Link to="/properties" className="transition__cta">
-          Discover Aurelia
+          Discover Aurelis
           <span className="transition__cta-arrow" aria-hidden="true">→</span>
         </Link>
       </div>

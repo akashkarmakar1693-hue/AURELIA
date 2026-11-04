@@ -81,7 +81,7 @@ export default function PrivateEnquiries() {
       <div className="enquiries__veil" aria-hidden="true" />
 
       <div className="enquiries__content">
-        <p className="enquiries__eyebrow">AURELIA / PRIVATE ENQUIRIES</p>
+        <p className="enquiries__eyebrow">AURELIS / PRIVATE ENQUIRIES</p>
         <h2 className="enquiries__title" id="enquiries-title">
           A place worth calling your own.
         </h2>

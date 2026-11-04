@@ -44,11 +44,11 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer__inner">
         <div className="footer__brand">
-          <p className="footer__eyebrow">AURELIA / PRIVATE RESIDENCES</p>
+          <p className="footer__eyebrow">AURELIS / PRIVATE RESIDENCES</p>
           {/* Decorative: the eyebrow and the copyright already name the brand
               for assistive technology, so the oversized mark is not repeated. */}
           <p className="footer__wordmark" aria-hidden="true">
-            <span className="footer__wordmark-inner">AURELIA</span>
+            <span className="footer__wordmark-inner">AURELIS</span>
           </p>
           <p className="footer__statement">
             Architecture shaped around the way you live.
@@ -90,7 +90,7 @@ export default function Footer() {
           <div className="footer__column">
             <h2 className="footer__label">Brand</h2>
             <p className="footer__note">
-              AURELIA presents architecture as experience — precise, restrained,
+              AURELIS presents architecture as experience — precise, restrained,
               and intentional. A curated collection of residences in the world's
               most prestigious locations.
             </p>
@@ -98,7 +98,7 @@ export default function Footer() {
         </div>
 
         <div className="footer__bottom">
-          <p className="footer__copyright">© {year} AURELIA</p>
+          <p className="footer__copyright">© {year} AURELIS</p>
           <button type="button" className="footer__top" onClick={handleBackToTop}>
             Back to top
             <span className="footer__top-arrow" aria-hidden="true">

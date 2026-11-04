@@ -34,7 +34,7 @@ export default function AboutHero() {
           { scaleX: 1, duration: 1.2, ease: "expo.out" },
           0
         )
-        // Eyebrow: tracking tightens as it lands (established AURELIA reveal).
+        // Eyebrow: tracking tightens as it lands (established AURELIS reveal).
         .fromTo(
           ".about-hero__eyebrow",
           { opacity: 0, y: 14, letterSpacing: "0.5em" },
@@ -103,7 +103,7 @@ export default function AboutHero() {
       aria-labelledby="about-perspective-title"
     >
       <p className="about__meta">
-        <span>AURELIA / OUR PERSPECTIVE</span>
+        <span>AURELIS / OUR PERSPECTIVE</span>
         <span>01 — The Perspective</span>
       </p>
       <div className="about__rule about-hero__rule" aria-hidden="true" />

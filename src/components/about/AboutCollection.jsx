@@ -122,7 +122,7 @@ export default function AboutCollection() {
         />
       </div>
       <p className="about__caption about-collection__caption">
-        Fig. 03 — The Aurelia Collection
+        Fig. 03 — The Aurelis Collection
       </p>
     </section>
   );

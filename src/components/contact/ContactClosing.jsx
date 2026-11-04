@@ -55,7 +55,7 @@ export default function ContactClosing() {
       className="contact-closing"
       aria-labelledby="contact-closing-title"
     >
-      <p className="contact__eyebrow contact-closing__eyebrow">AURELIA</p>
+      <p className="contact__eyebrow contact-closing__eyebrow">AURELIS</p>
       <h2 id="contact-closing-title" className="contact-closing__title">
         <span className="contact__title-line">
           <span>Some conversations lead</span>

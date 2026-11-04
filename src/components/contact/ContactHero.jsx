@@ -88,7 +88,7 @@ export default function ContactHero() {
           <div className="contact__rule-gold contact-hero__rule-gold" aria-hidden="true" />
           <p className="contact-hero__lead">
             Whether you have a particular residence in mind or would simply like
-            to learn more about AURELIA, we welcome your enquiry.
+            to learn more about AURELIS, we welcome your enquiry.
           </p>
         </div>
 

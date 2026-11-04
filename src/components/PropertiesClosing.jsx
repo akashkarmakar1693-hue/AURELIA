@@ -137,7 +137,7 @@ export default function PropertiesClosing() {
 
         <div className="closing__content">
           <div className="closing__rule" aria-hidden="true" />
-          <p className="closing__eyebrow">AURELIA / PRIVATE ENQUIRIES</p>
+          <p className="closing__eyebrow">AURELIS / PRIVATE ENQUIRIES</p>
           <h2 id="closing-title" className="closing__title">
             Some places stay with you.
           </h2>

@@ -44,7 +44,7 @@ export default function Navbar() {
     <header ref={headerRef} className="sticky top-0 z-40 -mb-18">
       <nav aria-label="Primary" className="flex items-center justify-between px-[5vw] py-6">
         <NavLink to="/" className="wordmark text-base font-bold text-warm-white">
-          AURELIA
+          AURELIS
         </NavLink>
 
         <button

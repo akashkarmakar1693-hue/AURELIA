@@ -3,9 +3,17 @@ import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { initLenis, getLenis } from "../utils/lenis";
+import { applyPageMetadata } from "../utils/seo";
 
 export default function RootLayout() {
   const { pathname } = useLocation();
+
+  // Route-aware title, description, canonical and social metadata. This is a
+  // client-rendered Vite SPA, so every route serves the same index.html; the
+  // defaults there are replaced here as soon as the route is known.
+  useLayoutEffect(() => {
+    applyPageMetadata(pathname);
+  }, [pathname]);
 
   // One site-wide smooth-scroll controller (see utils/lenis.js for the
   // ticker hookup details).
