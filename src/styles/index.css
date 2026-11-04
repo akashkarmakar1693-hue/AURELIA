@@ -81,14 +81,6 @@
     background: rgba(245, 240, 232, 0.1);
     transform-origin: center top;
   }
-  .props-hero__col {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 1px;
-    background: rgba(245, 240, 232, 0.06);
-    transform-origin: center top;
-  }
   .props-hero__eyebrow {
     @apply mb-5 font-display text-[11px] font-bold uppercase;
     letter-spacing: 0.35em;

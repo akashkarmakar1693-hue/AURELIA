@@ -66,13 +66,6 @@ export default function PropertiesHero() {
           { yPercent: 0, duration: 1.5, ease: "expo.out", stagger: 0.14 },
           0.4
         )
-        // Column guides grow downward — the grid assembles after the words.
-        .fromTo(
-          ".props-hero__col",
-          { scaleY: 0 },
-          { scaleY: 1, duration: 1.3, ease: "expo.out", stagger: 0.1 },
-          0.7
-        )
         // Champagne datum rule draws out of its cross mark.
         .fromTo(
           ".props-hero__lower",
