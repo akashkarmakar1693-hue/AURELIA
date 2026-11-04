@@ -1,0 +1,2057 @@
+@import "tailwindcss";
+
+@theme {
+  --color-obsidian: #0a0a0f;
+  --color-surface: #12121a;
+  --color-warm-white: #f5f0e8;
+  --color-champagne: #d4af37;
+
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-obsidian);
+    color: var(--color-warm-white);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-champagne);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .h1 {
+    @apply font-display text-4xl font-bold tracking-tight text-warm-white sm:text-6xl;
+  }
+  .h2 {
+    @apply font-display text-3xl font-bold tracking-tight text-warm-white sm:text-4xl;
+  }
+  .h3 {
+    @apply font-display text-2xl font-bold tracking-tight text-warm-white sm:text-3xl;
+  }
+  .lead {
+    @apply mt-4 max-w-xl text-lg text-warm-white/70;
+  }
+  .eyebrow {
+    @apply font-display text-xs font-bold tracking-[0.3em] uppercase text-champagne;
+  }
+
+  /* Base for the standard pages built on Section.jsx (Properties, About,
+     Contact, Property Detail). The sticky navbar deliberately overlays the
+     content below it (-mb-18, so it can sit over the Home Hero), so these
+     pages must open with their own clearance. Top padding clears the ~72px
+     bar plus editorial breathing room, mirroring .enquiries (7rem, 8vw). */
+  .section {
+    padding: clamp(7rem, 16dvh, 11rem) 5vw clamp(4rem, 10vh, 7rem);
+  }
+
+  /* --- Properties hero: editorial opening plate for /properties ---
+     Same vocabulary as the Home collection intro — serif display title,
+     champagne rule, hairline guides — staged as its own entrance with no
+     pinning, so it never interacts with page scrolling. */
+  .props-hero {
+    position: relative;
+  }
+  .props-hero__meta {
+    @apply m-0 mb-6 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 font-display text-[10px] font-medium uppercase;
+    letter-spacing: 0.3em;
+    color: rgba(245, 240, 232, 0.42);
+  }
+  .props-hero__rule-h {
+    height: 1px;
+    background: rgba(245, 240, 232, 0.14);
+    transform-origin: left center;
+  }
+  /* Edge rules define the plate's columns; they run the full hero height. */
+  .props-hero__rule-side {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: rgba(245, 240, 232, 0.1);
+    transform-origin: center top;
+  }
+  .props-hero__col {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 1px;
+    background: rgba(245, 240, 232, 0.06);
+    transform-origin: center top;
+  }
+  .props-hero__eyebrow {
+    @apply mb-5 font-display text-[11px] font-bold uppercase;
+    letter-spacing: 0.35em;
+    color: var(--color-champagne);
+  }
+  .props-hero__title {
+    @apply m-0 font-display font-normal;
+    font-family: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: clamp(2.75rem, 6vw, 5.25rem);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--color-warm-white);
+  }
+  .props-hero__line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+  }
+  .props-hero__line > span {
+    display: block;
+  }
+  .props-hero__lower {
+    @apply mt-10 flex flex-col gap-8 md:mt-14 md:flex-row md:items-center md:justify-between md:gap-16;
+  }
+  .props-hero__datum {
+    position: relative;
+    flex-shrink: 0;
+    width: 105px;
+  }
+  .props-hero__rule-gold {
+    height: 1px;
+    background: var(--color-champagne);
+    transform-origin: left center;
+  }
+  .props-hero__statement {
+    @apply m-0 max-w-[38ch] text-[clamp(0.9rem,1vw,1rem)] font-light;
+    line-height: 1.7;
+    letter-spacing: 0.015em;
+    color: rgba(207, 187, 142, 0.55);
+  }
+  .props-hero__numeral {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 0;
+    font-family: var(--font-display);
+    font-size: clamp(7rem, 22vw, 18rem);
+    font-weight: 500;
+    line-height: 0.9;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(212, 175, 55, 0.3);
+    pointer-events: none;
+    user-select: none;
+  }
+  .props-hero__scrollcue {
+    @apply mt-10 flex items-center justify-end gap-2 font-display text-[10px] font-bold uppercase text-champagne;
+    letter-spacing: 0.25em;
+  }
+  @media (max-width: 767px) {
+    .props-hero__numeral {
+      top: 1.5rem;
+      font-size: clamp(5rem, 24vw, 8rem);
+      opacity: 0.6;
+    }
+  }
+
+  /* --- Properties closing: the editorial back page of /properties ---
+     An inset architectural plate (distinct from the Home enquiries
+     full-bleed) on obsidian: framed crop of a quiet villa at dusk, text
+     anchored lower-left over water reflection. GSAP draws the crop open,
+     scrubs a shallow parallax, and staggers the words in — never pinned. */
+  .closing {
+    position: relative;
+    padding: clamp(3.5rem, 9vh, 7rem) 5vw clamp(3.5rem, 9vh, 7rem);
+    background: var(--color-obsidian);
+  }
+  .closing__stage {
+    position: relative;
+    min-height: clamp(26rem, 86vh, 52rem);
+    overflow: hidden;
+    border: 1px solid rgba(245, 240, 232, 0.09);
+    border-radius: 18px;
+    background: var(--color-surface);
+  }
+  .closing__media {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  /* Overshoot top/bottom so the scrubbed parallax never exposes an edge. */
+  .closing__img {
+    position: absolute;
+    left: 0;
+    top: -8%;
+    width: 100%;
+    height: 116%;
+    object-fit: cover;
+    object-position: center;
+    will-change: transform;
+  }
+  .closing__veil {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      to top,
+      rgba(10, 10, 15, 0.82) 0%,
+      rgba(10, 10, 15, 0.42) 32%,
+      rgba(10, 10, 15, 0.04) 58%,
+      rgba(10, 10, 15, 0.14) 100%
+    );
+  }
+  .closing__content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    max-width: 620px;
+    padding: 0 clamp(1.5rem, 4vw, 3.5rem) clamp(2rem, 5vh, 3.5rem);
+  }
+  .closing__rule {
+    width: 105px;
+    height: 1px;
+    margin-bottom: 2rem;
+    background: var(--color-champagne);
+    opacity: 0.55;
+    transform-origin: left center;
+  }
+  .closing__eyebrow {
+    @apply m-0 mb-6 font-display text-[11px] font-bold uppercase;
+    letter-spacing: 0.35em;
+    color: var(--color-champagne);
+  }
+  .closing__title {
+    @apply m-0 font-display font-normal;
+    font-family: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: clamp(1.9rem, 3.6vw, 3.4rem);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    color: var(--color-warm-white);
+    text-wrap: balance;
+  }
+  .closing__copy {
+    @apply m-0;
+    margin-top: 1.5rem;
+    max-width: 44ch;
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: rgba(245, 240, 232, 0.68);
+  }
+  .closing__actions {
+    @apply mt-9 flex flex-wrap items-center gap-x-9 gap-y-4;
+  }
+  /* Primary CTA: the established champagne link with underline draw. */
+  .closing__cta {
+    @apply relative inline-flex items-center gap-1.5 font-display text-[11px] font-bold uppercase;
+    letter-spacing: 0.25em;
+    color: var(--color-champagne);
+  }
+  .closing__cta::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--color-champagne);
+    transition: width 0.35s ease;
+  }
+  .closing__cta:hover::after,
+  .closing__cta:focus-visible::after {
+    width: 100%;
+  }
+  .closing__cta-arrow {
+    transition: transform 0.35s ease;
+  }
+  .closing__cta:hover .closing__cta-arrow {
+    transform: translateX(4px);
+  }
+  /* Secondary: deliberately quieter, no underline decoration. */
+  .closing__secondary {
+    @apply inline-flex items-center font-display text-[10px] font-bold uppercase;
+    padding: 0;
+    border: 0;
+    background: none;
+    letter-spacing: 0.25em;
+    color: rgba(245, 240, 232, 0.5);
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  .closing__secondary:hover {
+    color: var(--color-champagne);
+  }
+
+  @media (max-width: 767px) {
+    .closing__stage {
+      min-height: clamp(24rem, 74vh, 40rem);
+    }
+    .closing__veil {
+      background: linear-gradient(
+        to top,
+        rgba(10, 10, 15, 0.9) 0%,
+        rgba(10, 10, 15, 0.55) 40%,
+        rgba(10, 10, 15, 0.08) 70%,
+        rgba(10, 10, 15, 0.2) 100%
+      );
+    }
+    .closing__copy {
+      max-width: none;
+    }
+  }
+
+  /* Wordmark — editorial serif */
+  .wordmark {
+    font-family: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    letter-spacing: 0.02em;
+  }
+
+  /* --- Shared page section ---
+     The sticky navbar overlays the page: it pulls the content up beneath
+     itself with a negative bottom margin (-mb-18, a 72px band) that the
+     Home Hero absorbs. Section-based pages have no hero, so their top
+     padding has to clear that band; without it the eyebrow and title
+     render flush at the viewport top, hidden behind the transparent bar. */
+  .section {
+    padding: clamp(7rem, 14vh, 10rem) 5vw clamp(3.5rem, 8vh, 6rem);
+  }
+
+  /* --- Hero --- */
+  .hero {
+    position: relative;
+    min-height: 100dvh;
+    overflow: hidden;
+  }
+  .hero__media {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-surface);
+  }
+  .hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right center;
+  }
+  .hero__gradient {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 70% 90% at 18% 50%,
+      rgba(10, 10, 15, 0.8) 0%,
+      rgba(10, 10, 15, 0.4) 35%,
+      transparent 65%
+    );
+  }
+  /* Bottom-anchored editorial band: the full viewport width carries the
+     composition — oversized serif display left, a single data line and the
+     CTA in a quiet lower register — instead of a mid-left text column. */
+  .hero__content {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 8rem 5vw clamp(3rem, 9vh, 6rem);
+  }
+  .hero__eyebrow {
+    @apply m-0 mb-6 font-display text-[11px] font-bold tracking-[0.4em] uppercase text-champagne;
+  }
+  .hero__title {
+    margin: 0;
+    font-family: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: clamp(2.85rem, 7vw, 6.5rem);
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: var(--color-warm-white);
+    text-wrap: balance;
+  }
+  /* Masked line reveal: each title line lifts from below its own
+     overflow-hidden window — the site's standard masked-typography pattern. */
+  .hero__title-line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+  }
+  .hero__title-line > span {
+    display: block;
+    will-change: transform;
+  }
+  .hero__rule {
+    width: 74px;
+    height: 1px;
+    margin-top: clamp(1.75rem, 3.5vh, 2.75rem);
+    background: var(--color-champagne);
+    opacity: 0.65;
+  }
+  .hero__foot {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2.5rem;
+    margin-top: clamp(1.6rem, 3.5vh, 3rem);
+  }
+  .hero__lead {
+    margin: 0;
+    max-width: 34ch;
+    font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+    font-weight: 300;
+    line-height: 1.7;
+    letter-spacing: 0.015em;
+    color: rgba(245, 240, 232, 0.6);
+  }
+  .hero__cta {
+    @apply relative inline-flex flex-shrink-0 items-center gap-1.5 font-display text-[11px] font-bold tracking-[0.25em] uppercase text-champagne;
+  }
+  .hero__cue {
+    position: absolute;
+    right: 5vw;
+    bottom: clamp(3rem, 9vh, 6rem);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-display);
+    font-size: 15px;
+    color: rgba(245, 240, 232, 0.55);
+    animation: hero-cue 2.6s ease-in-out infinite;
+  }
+  .hero__cue::before {
+    content: "";
+    width: 44px;
+    height: 1px;
+    background: rgba(245, 240, 232, 0.28);
+  }
+  @keyframes hero-cue {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+  /* Static film grain: a compositor-only plate that keeps the photographic
+     hero from reading as a bare <img> stretched across the viewport. */
+  .hero__media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.055;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+  }
+
+  @media (max-width: 767px) {
+    .hero__content {
+      padding: 7rem 6vw clamp(3rem, 9vh, 5rem);
+    }
+    .hero__eyebrow {
+      margin-bottom: 1.25rem;
+    }
+    .hero__foot {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+    .hero__cue {
+      display: none;
+    }
+  }
+
+  /* Entrance is GSAP-owned (the Home opening timeline): hero text starts
+     hidden pre-paint and reveals once the document fonts have settled, so
+     no CSS animation ever writes these elements and reverse scrolling is
+     exclusively the scrub timeline's concern. */
+  .hero__cta::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--color-champagne);
+    transition: width 0.35s ease;
+  }
+  .hero__cta:hover::after {
+    width: 100%;
+  }
+  .hero__cta-arrow {
+    transition: transform 0.35s ease;
+  }
+  .hero__cta:hover .hero__cta-arrow {
+    transform: translateX(4px);
+  }
+  /* Obsidian veil over the Hero — deepens while the transition scrubs. */
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--color-obsidian);
+    opacity: 0;
+  }
+
+  /* --- Transition Image --- */
+  .transition {
+    position: relative;
+    height: 100dvh;
+    overflow: hidden;
+    will-change: transform, clip-path;
+  }
+  .transition__image {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .transition__image-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+  }
+  /* Statement content: vertically centered at the left frame line, carried
+     by an oversized serif headline. The champagne rule above the eyebrow is
+     drawn via ::before; it rides the pinned section as it rises. */
+  .transition__content {
+    position: absolute;
+    left: 7vw;
+    top: 50%;
+    translate: 0 -50%;
+    z-index: 1;
+    max-width: 640px;
+    padding-right: 2rem;
+  }
+  .transition__content::before {
+    content: "";
+    display: block;
+    width: 74px;
+    height: 1px;
+    margin-bottom: 2rem;
+    background: var(--color-champagne);
+  }
+  .transition__eyebrow {
+    @apply m-0 mb-6 font-display text-[11px] font-bold tracking-[0.4em] uppercase text-champagne;
+  }
+  .transition__headline {
+    margin: 0;
+    font-family: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: clamp(2.3rem, 4.8vw, 4.4rem);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--color-warm-white);
+    overflow: hidden;
+    text-wrap: balance;
+    /* Descender compensation, same as every other masked title line on the
+       site: the mask must clip the reveal, never the glyphs at rest. */
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+  }
+  .transition__headline-inner {
+    display: block;
+  }
+  .transition__lead {
+    @apply mt-6 max-w-md text-[0.95rem] font-light text-warm-white/65;
+    line-height: 1.75;
+    letter-spacing: 0.015em;
+  }
+  .transition__cta {
+    @apply mt-8 inline-flex items-center gap-1.5 font-display text-[11px] font-bold tracking-[0.25em] uppercase text-champagne;
+    position: relative;
+  }
+  .transition__cta::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--color-champagne);
+    transition: width 0.35s ease;
+  }
+  .transition__cta:hover::after {
+    width: 100%;
+  }
+  .transition__cta-arrow {
+    transition: transform 0.35s ease;
+  }
+  .transition__cta:hover .transition__cta-arrow {
+    transform: translateX(4px);
+  }
+  /* Fades over the Statement; matches the Collection's charcoal for a seamless handoff. */
+  .transition__veil {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: #12110f;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* --- Transition stage: pinned Hero, Statement rises over it --- */
+  .transition-stage {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .transition-stage > .hero {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .transition-stage > .transition {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    z-index: 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* No pin/scrub under reduced motion — layers return to normal flow. */
+  .transition-stage {
+    height: auto;
+    overflow: visible;
+  }
+  .transition-stage > .hero,
+  .transition-stage > .transition {
+    position: relative;
+    inset: auto;
+  }
+  .transition-stage > .transition {
+    height: 100dvh;
+  }
+}
+
+/* --- Collection: editorial horizontal rail on warm charcoal --- */
+@layer components {
+  .collection {
+    position: relative;
+    z-index: 1;
+    background: #12110f;
+    color: var(--color-warm-white);
+    --collection-info-h: 190px;
+  }
+  .collection__intro {
+    padding: clamp(7rem, 18vh, 12rem) 6vw clamp(3rem, 7vh, 5rem);
+  }
+  .collection__eyebrow {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.42);
+  }
+  .collection__title {
+    margin: 3rem 0 0;
+    font-family: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: clamp(2.75rem, 6vw, 5.25rem);
+    font-weight: 400;
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--color-warm-white);
+  }
+  .collection__title-line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+  }
+  .collection__title-line > span {
+    display: block;
+  }
+  .collection__intro-rule {
+    width: 105px;
+    height: 1px;
+    margin-top: 3rem;
+    background: var(--color-champagne);
+    opacity: 0.55;
+    transform-origin: left center;
+  }
+  .collection__statement {
+    margin: 3rem 0 0 auto;
+    max-width: 34ch;
+    font-size: clamp(0.9rem, 1vw, 1rem);
+    font-weight: 300;
+    line-height: 1.7;
+    letter-spacing: 0.015em;
+    color: rgba(207, 187, 142, 0.55);
+  }
+  @media (max-width: 767px) {
+    .collection__statement {
+      margin-left: 0;
+    }
+  }
+
+  /* Pinned viewport stage. Top padding clears the sticky navbar. */
+  .collection__stage {
+    position: relative;
+    z-index: 5;
+    height: 100dvh;
+    overflow: hidden;
+    background: #12110f;
+    padding: 6.5rem 0 3rem;
+  }
+
+  /* The rail's visual plate. Home's section-handoff animates this wrapper
+     (recede/expand); the pinned stage above owns geometry only. */
+  .collection__plate {
+    position: relative;
+    height: 100%;
+    transform-origin: center center;
+    will-change: transform, opacity, clip-path;
+  }
+
+  .collection__rail {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    will-change: transform;
+  }
+  .collection__card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: min(78vw, 380px);
+    height: 100%;
+    overflow: hidden;
+    opacity: 0.6;
+    transform-origin: center center;
+    border: 1px solid rgba(245, 240, 232, 0.08);
+    border-radius: 3px;
+    background: #131110;
+    box-shadow:
+      0 30px 70px -30px rgba(0, 0, 0, 0.75),
+      0 10px 28px -18px rgba(0, 0, 0, 0.6);
+    will-change: transform, opacity;
+  }
+  .collection__media {
+    position: relative;
+    height: calc(100% - var(--collection-info-h));
+    overflow: hidden;
+    background: rgba(245, 240, 232, 0.05);
+    border-bottom: 1px solid rgba(245, 240, 232, 0.08);
+    /* Hover-only transform: the browser promotes it for the transition on
+       demand. A permanent will-change here kept 12 large extra compositor
+       layers alive through the whole pinned stroke for no scroll benefit. */
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  /* Hover lives on the media wrapper because the img's transform is owned
+     inline by the rail's parallax/zoom — scaling the wrapper composes with
+     it instead of fighting it. */
+  .collection__card:hover .collection__media {
+    transform: scale(1.03);
+  }
+  /* Soft veil on idle cards, lifting on hover. Uses opacity (compositor-
+     friendly) and a slow 0.9s ease instead of a brightness flip. */
+  .collection__media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10, 9, 7, 0.28), rgba(10, 9, 7, 0.04));
+    opacity: 1;
+    transition: opacity 0.9s ease;
+    pointer-events: none;
+  }
+  .collection__card:hover .collection__media::after {
+    opacity: 0.3;
+  }
+  .collection__card:hover .collection__info {
+    translate: 0 -4px;
+  }
+  /* Oversized so the ±32px parallax shift never exposes an edge. */
+  .collection__img {
+    position: absolute;
+    top: 0;
+    left: -40px;
+    width: calc(100% + 80px);
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    will-change: transform;
+  }
+  .collection__info {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: var(--collection-info-h);
+    padding: 0 1.25rem 1.25rem;
+    overflow: hidden;
+    opacity: 0;
+    background: #131110;
+    transition: translate 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  /* Property names join the site's serif display voice (journal titles, the
+     Statement, the footer wordmark) instead of the sans display face. */
+  .collection__name {
+    margin: 0;
+    font-family: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: clamp(1.35rem, 1.9vw, 1.9rem);
+    font-weight: 400;
+    line-height: 1.14;
+    letter-spacing: -0.01em;
+    color: var(--color-warm-white);
+  }
+  .collection__location {
+    margin-top: 0.4rem;
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(212, 175, 55, 0.75);
+  }
+  .collection__desc {
+    margin-top: 0.85rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: rgba(245, 240, 232, 0.6);
+  }
+  .collection__rule {
+    margin-top: 1rem;
+    height: 1px;
+    background: rgba(212, 175, 55, 0.4);
+  }
+  .collection__foot {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.25rem;
+    margin-top: 0.7rem;
+  }
+  .collection__cat {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.75);
+  }
+  .collection__meta {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: right;
+    color: rgba(245, 240, 232, 0.4);
+  }
+
+  @media (max-width: 767px) {
+    .collection {
+      --collection-info-h: 200px;
+    }
+    .collection__stage {
+      padding: 5.75rem 0 2.25rem;
+    }
+  }
+
+  /* Reduced motion: no pin, no morph — a plain wrapped gallery. */
+  .collection--static .collection__stage {
+    height: auto;
+    padding-bottom: clamp(4rem, 8vh, 6rem);
+  }
+  .collection--static .collection__plate {
+    height: auto;
+    transform: none;
+  }
+  .collection--static .collection__rail {
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    width: auto;
+    height: auto;
+    padding: 0 5vw;
+    transform: none;
+  }
+  .collection--static .collection__card {
+    position: relative;
+    width: min(84vw, 400px);
+    height: auto;
+    opacity: 1;
+    transform: none;
+  }
+  .collection--static .collection__media {
+    height: clamp(240px, 32vw, 340px);
+  }
+  .collection--static .collection__info {
+    position: static;
+    height: auto;
+    padding-top: 1.1rem;
+    opacity: 1;
+  }
+}
+
+/* --- Home outro: Section 2 lifts with natural scroll and dims while the
+   fixed footer is revealed beneath it through a transparent 85vh window.
+   Home-only (body class set by Home.jsx). #main forms the opaque curtain
+   layer above the footer; only .collection-outro is transparent, so the
+   footer exists underneath the outgoing collection the whole time. No
+   pinning, no added scroll phase. --- */
+@layer components {
+  body.home-outro #main {
+    position: relative;
+    z-index: 1;
+  }
+  body.home-outro footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+  }
+  /* Fallback height only — Home.jsx sizes the window to the footer's real
+     height so the reveal maps 1:1 onto the whole distance. */
+  .collection-outro {
+    height: 85vh;
+    pointer-events: none;
+  }
+}
+
+/* --- Journal: one continuous editorial feature --- */
+@layer components {
+  .journal { position: relative; z-index: 2; background: #0d0c0a; color: var(--color-warm-white); }
+
+  .journal__stage { position: relative; height: 100vh; overflow: hidden; }
+
+  /* The journal's visual plate. The stage above is the pin trigger and must
+     stay untransformed; Home's section-handoff animates the plate.
+     Two owners, two elements, on purpose: __enter is owned by the
+     Collection → Journal handoff, __plate by Journal → Enquiries. A single
+     element written by two timelines would snap at the boundary. */
+  .journal__plate {
+    position: absolute;
+    inset: 0;
+    transform-origin: center center;
+    will-change: transform, clip-path;
+  }
+  .journal__enter {
+    position: absolute;
+    inset: 0;
+    transform-origin: center center;
+    will-change: transform, clip-path;
+  }
+  .journal__images { position: absolute; inset: 0; z-index: 0; }
+  .journal__frame { position: absolute; inset: -2.5%; margin: 0; will-change: transform; }
+  .journal__img { width: 100%; height: 100%; object-fit: cover; display: block; will-change: transform, opacity; }
+  .journal__atmosphere { position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0; background: radial-gradient(120% 90% at 50% 40%, rgba(13,12,10,0.5) 0%, rgba(13,12,10,0.18) 55%, transparent 80%); }
+  .journal__texts { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+  .journal__text { position: absolute; max-width: 360px; will-change: transform; text-shadow: 0 1px 22px rgba(13,12,10,0.55); }
+  .journal__text--right { right: 9vw; top: 50%; transform: translateY(-50%); }
+  .journal__text--left { left: 9vw; top: 30%; }
+  .journal__number {
+    margin: 0 0 1.5rem;
+    font-family: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: clamp(2.6rem, 4.5vw, 4rem);
+    font-weight: 500;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(212, 175, 55, 0.45);
+  }
+  @supports not (-webkit-text-stroke: 1px black) {
+    .journal__number { color: rgba(212, 175, 55, 0.6); }
+  }
+  .journal__eyebrow { margin: 0 0 0.9rem; font-family: var(--font-display); font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(212,175,55,0.85); }
+  .journal__title { margin: 0; overflow: hidden; padding-bottom: 0.06em; font-family: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, serif; font-size: clamp(1.7rem, 2.8vw, 2.6rem); font-weight: 400; line-height: 1.15; }
+  .journal__title-inner { display: inline-block; will-change: transform; }
+  .journal__body { margin: 1.4rem 0 0; font-size: 0.92rem; line-height: 1.75; color: rgba(245,240,232,0.68); max-width: 36ch; }
+
+  @media (max-width: 767px) {
+    .journal__frame { inset: 0; }
+    .journal__text--right, .journal__text--left { left: 6vw; right: 6vw; top: auto; bottom: 8vh; transform: none; max-width: none; text-shadow: 0 1px 24px rgba(13,12,10,0.8); }
+    .journal__body { max-width: none; }
+ 
+  }
+
+  .journal--static .journal__stage { height: auto; overflow: visible; }
+  .journal--static .journal__plate { position: static; }
+  .journal--static .journal__enter { position: static; }
+  .journal--static .journal__images { position: static; }
+  .journal--static .journal__frame { position: relative; inset: auto; height: 80vh; margin: 0; }
+  .journal--static .journal__img { height: 80vh; }
+  .journal--static .journal__texts { display: none; }
+  .journal--static .journal__text { position: absolute; left: 6vw; right: 6vw; bottom: 8vh; top: auto; transform: none; max-width: none; text-shadow: 0 1px 24px rgba(13,12,10,0.8); }
+  .journal--static .journal__atmosphere { display: none; }
+}
+
+/* --- Private Enquiries: full-screen closing chapter --- */
+@layer components {
+  .enquiries {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 100dvh;
+    padding: 7rem 8vw clamp(3.5rem, 12vh, 8rem);
+    background: var(--color-obsidian);
+    overflow: hidden;
+  }
+  .enquiries__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .enquiries__media img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+  }
+  .enquiries__veil {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(to top, rgba(10, 10, 15, 0.92) 0%, rgba(10, 10, 15, 0.55) 34%, rgba(10, 10, 15, 0.1) 66%, rgba(10, 10, 15, 0.3) 100%),
+      linear-gradient(to right, rgba(10, 10, 15, 0.55) 0%, rgba(10, 10, 15, 0.18) 42%, transparent 72%);
+  }
+  .enquiries__content {
+    position: relative;
+    z-index: 2;
+    max-width: 520px;
+  }
+  .enquiries__content::before {
+    content: "";
+    display: block;
+    width: 74px;
+    height: 1px;
+    margin-bottom: 2rem;
+    background: var(--color-champagne);
+    opacity: 0.85;
+  }
+  .enquiries__eyebrow {
+    margin: 0 0 1.75rem;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--color-champagne);
+  }
+  .enquiries__title {
+    margin: 0;
+    font-family: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: clamp(2.1rem, 4.2vw, 3.75rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--color-warm-white);
+    text-wrap: balance;
+  }
+  .enquiries__lead {
+    margin: 1.6rem 0 0;
+    max-width: 44ch;
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.75;
+    letter-spacing: 0.015em;
+    color: rgba(245, 240, 232, 0.68);
+  }
+  .enquiries__cta {
+    @apply mt-9 inline-flex items-center gap-1.5 font-display text-[11px] font-bold tracking-[0.25em] uppercase text-champagne;
+    position: relative;
+  }
+  .enquiries__cta::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--color-champagne);
+    transition: width 0.35s ease;
+  }
+  .enquiries__cta:hover::after {
+    width: 100%;
+  }
+  .enquiries__cta-arrow {
+    transition: transform 0.35s ease;
+  }
+  .enquiries__cta:hover .enquiries__cta-arrow {
+    transform: translateX(4px);
+  }
+  .enquiries__note {
+    margin: 1.75rem 0 0;
+    font-size: 0.8rem;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+    color: rgba(245, 240, 232, 0.45);
+  }
+
+  @media (max-width: 767px) {
+    .enquiries {
+      padding: 6.5rem 6vw clamp(3rem, 9vh, 5rem);
+    }
+    .enquiries__content {
+      max-width: none;
+    }
+    .enquiries__title {
+      font-size: clamp(1.9rem, 8vw, 2.6rem);
+    }
+    .enquiries__veil {
+      background:
+        linear-gradient(to top, rgba(10, 10, 15, 0.95) 0%, rgba(10, 10, 15, 0.62) 40%, rgba(10, 10, 15, 0.18) 72%, rgba(10, 10, 15, 0.35) 100%),
+        linear-gradient(to right, rgba(10, 10, 15, 0.4) 0%, rgba(10, 10, 15, 0.1) 50%, transparent 80%);
+    }
+  }
+}
+
+/* --- Footer: cinematic closing plate ---
+   Full-bleed obsidian plate closed by an editorial serif wordmark. The height
+   is deliberately bounded (vh-aware type, plus the short-viewport block at
+   the end) because the Home outro window is sized to it: a footer taller than
+   the viewport would keep its top edge permanently above the screen at the
+   end of the document. No card, no gradient, no decorative iconography. */
+@layer components {
+  .footer {
+    background: var(--color-obsidian);
+    color: var(--color-warm-white);
+    border-top: 1px solid rgba(212, 175, 55, 0.22);
+  }
+  .footer__inner {
+    display: flex;
+    flex-direction: column;
+    padding: clamp(1.75rem, 7vh, 5.5rem) 5vw calc(1.25rem + env(safe-area-inset-bottom));
+  }
+  .footer__eyebrow {
+    margin: 0 0 clamp(1rem, 2.5vh, 1.75rem);
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    color: rgba(212, 175, 55, 0.75);
+  }
+  .footer__wordmark {
+    margin: 0;
+    padding-bottom: 0.08em;
+    overflow: hidden;
+    line-height: 1;
+  }
+  .footer__wordmark-inner {
+    display: block;
+    font-family: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: clamp(3rem, min(16vw, 15vh), 10rem);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--color-warm-white);
+    will-change: transform;
+  }
+  .footer__statement {
+    margin: clamp(0.9rem, 2.2vh, 1.5rem) 0 0;
+    max-width: 44ch;
+    font-size: clamp(0.85rem, 1.05vw, 1rem);
+    font-weight: 300;
+    line-height: 1.65;
+    letter-spacing: 0.01em;
+    color: rgba(245, 240, 232, 0.55);
+    text-wrap: balance;
+  }
+  .footer__columns {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.5rem, 4vw, 4rem);
+    margin-top: clamp(1.75rem, 5vh, 3.5rem);
+    padding-top: clamp(1.25rem, 3vh, 2rem);
+    border-top: 1px solid rgba(245, 240, 232, 0.12);
+  }
+  .footer__column {
+    min-width: 0;
+  }
+  .footer__label {
+    margin: 0 0 clamp(0.6rem, 1.5vh, 0.95rem);
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.4);
+  }
+  .footer__list {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.35rem, 0.9vh, 0.6rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .footer__link {
+    display: inline-block;
+    font-size: 0.875rem;
+    color: rgba(245, 240, 232, 0.72);
+    transition: color 0.3s ease;
+  }
+  .footer__link:hover {
+    color: var(--color-champagne);
+  }
+  .footer__muted {
+    font-size: 0.875rem;
+    color: rgba(245, 240, 232, 0.42);
+  }
+  .footer__note {
+    margin: 0;
+    max-width: 34ch;
+    font-size: 0.875rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(245, 240, 232, 0.5);
+  }
+  .footer__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: clamp(1.5rem, 4vh, 2.75rem);
+    padding-top: clamp(0.85rem, 2vh, 1.25rem);
+    border-top: 1px solid rgba(245, 240, 232, 0.1);
+  }
+  .footer__copyright {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.4);
+  }
+  .footer__top {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0;
+    border: 0;
+    background: none;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.55);
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  .footer__top:hover {
+    color: var(--color-champagne);
+  }
+  .footer__top-arrow {
+    transition: transform 0.35s ease;
+  }
+  .footer__top:hover .footer__top-arrow {
+    transform: translateY(-3px);
+  }
+
+  @media (max-width: 767px) {
+    .footer__inner {
+      padding-top: clamp(1.5rem, 5.5vh, 4rem);
+    }
+    .footer__columns {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem 1.5rem;
+      margin-top: clamp(1.25rem, 4vh, 2rem);
+      padding-top: 1rem;
+    }
+    /* Brand copy takes the full width beneath the two link columns. */
+    .footer__column:nth-child(3) {
+      grid-column: 1 / -1;
+    }
+    .footer__statement {
+      max-width: none;
+    }
+    .footer__note {
+      max-width: 46ch;
+    }
+  }
+
+  /* Short viewports: compact type and spacing so the plate's height always
+     stays below the viewport, including landscape phones and short
+     split-screen windows. */
+  @media (max-height: 620px) and (max-width: 767px), (max-height: 420px) {
+    .footer__inner {
+      padding: 1rem 5vw calc(0.75rem + env(safe-area-inset-bottom));
+    }
+    .footer__eyebrow {
+      margin-bottom: 0.5rem;
+      font-size: 9px;
+    }
+    .footer__wordmark-inner {
+      font-size: clamp(2rem, 11vh, 4.5rem);
+    }
+    .footer__statement {
+      margin-top: 0.5rem;
+      font-size: 0.78rem;
+      line-height: 1.45;
+    }
+    .footer__columns {
+      gap: 1rem 1.5rem;
+      margin-top: 1rem;
+      padding-top: 0.75rem;
+    }
+    .footer__label {
+      margin-bottom: 0.4rem;
+      font-size: 9px;
+    }
+    .footer__list {
+      gap: 0.2rem;
+    }
+    .footer__link,
+    .footer__muted,
+    .footer__note {
+      font-size: 0.72rem;
+      line-height: 1.5;
+    }
+    .footer__bottom {
+      margin-top: 0.9rem;
+      padding-top: 0.6rem;
+    }
+    .footer__copyright,
+    .footer__top {
+      font-size: 9px;
+    }
+  }
+
+  /* Three across only where a short viewport is also wide enough (landscape
+     phones); narrow portrait keeps the two-column mobile stack. */
+  @media (max-height: 620px) and (min-width: 560px), (max-height: 420px) and (min-width: 560px) {
+    .footer__columns {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .footer__column:nth-child(3) {
+      grid-column: auto;
+    }
+  }
+}
+
+/* --- About: an editorial publication for an independent curator --------
+   Four numbered sections on obsidian: serif display titles, hairline
+   architectural guides, restrained champagne data, asymmetric image
+   compositions — no boxed cards, no glass. Initial hidden states exist
+   only inside gsap.context (set in useLayoutEffect), so the page renders
+   complete whenever its animations do not run: reduced motion, an error,
+   an older browser. ----------------------------------------------------- */
+@layer components {
+  .about {
+    position: relative;
+    background: var(--color-obsidian);
+    color: var(--color-warm-white);
+  }
+
+  /* --- shared editorial vocabulary --- */
+  .about__eyebrow {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--color-champagne);
+  }
+  .about__meta {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.42);
+  }
+  .about__rule {
+    height: 1px;
+    background: rgba(245, 240, 232, 0.14);
+    transform-origin: left center;
+  }
+  .about__rule-gold {
+    width: 105px;
+    height: 1px;
+    background: var(--color-champagne);
+    opacity: 0.65;
+    transform-origin: left center;
+  }
+  .about__title {
+    margin: 0;
+    font-family: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: clamp(2.25rem, 5.5vw, 4.5rem);
+    font-weight: 400;
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    color: var(--color-warm-white);
+  }
+  .about__title-line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+  }
+  .about__title-line > span {
+    display: block;
+    will-change: transform;
+  }
+  .about__lead {
+    margin: 1.6rem 0 0;
+    max-width: 40ch;
+    font-size: clamp(0.95rem, 1.15vw, 1.05rem);
+    font-weight: 300;
+    line-height: 1.75;
+    letter-spacing: 0.015em;
+    color: rgba(245, 240, 232, 0.62);
+  }
+  .about__body {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.75;
+    letter-spacing: 0.015em;
+    color: rgba(245, 240, 232, 0.62);
+  }
+  .about__caption {
+    margin: 0.85rem 0 0;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.38);
+  }
+  .about__numeral {
+    position: absolute;
+    font-family: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: clamp(6rem, 14vw, 11rem);
+    font-weight: 500;
+    line-height: 0.9;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(212, 175, 55, 0.22);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* --- imagery: clip-reveal media plates --------------------------------
+     The entrance owns the img's inline transform (counter-scale settle) and
+     the wrapper's clip-path; hover zoom therefore lives on the wrapper so
+     the two systems never write the same property. */
+  .about__media {
+    position: relative;
+    overflow: hidden;
+    background: rgba(245, 240, 232, 0.05);
+  }
+  .about__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    will-change: transform;
+  }
+  .about__media--hover {
+    transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .about__media--hover:hover {
+    transform: scale(1.028);
+  }
+
+  /* --- CTA — same vocabulary as the existing plates' text links --- */
+  .about__cta {
+    margin-top: 2.25rem;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--color-champagne);
+  }
+  .about__cta::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 1px;
+    background: var(--color-champagne);
+    transition: width 0.35s ease;
+  }
+  .about__cta:hover::after,
+  .about__cta:focus-visible::after {
+    width: 100%;
+  }
+  .about__cta-arrow {
+    transition: transform 0.35s ease;
+  }
+  .about__cta:hover .about__cta-arrow {
+    transform: translate(3px, -3px);
+  }
+
+  /* --- Section 01 — The Perspective --------------------------------------
+     Opening plate: meta strip and hairline frame the column grid, the
+     headline holds the left column while the large architectural image
+     anchors the right. Top padding clears the sticky navbar band, per
+     .section's own clearance. */
+  .about-hero {
+    position: relative;
+    padding: clamp(7rem, 16dvh, 11rem) 5vw clamp(5rem, 12vh, 9rem);
+  }
+  .about-hero__grid {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 4rem);
+    margin-top: clamp(2.5rem, 6vh, 4.25rem);
+  }
+  @media (min-width: 1024px) {
+    .about-hero__grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      align-items: end;
+    }
+  }
+  .about-hero__media {
+    height: clamp(20rem, 62vh, 42rem);
+  }
+  .about-hero__title {
+    margin-top: 1.3rem;
+  }
+  .about-hero__datum {
+    margin-top: 1.75rem;
+  }
+
+  /* --- Section 02 — The Philosophy ---------------------------------------
+     Asymmetric split: the image column carries the weight, the text column
+     sits lower against it with a breath offset. */
+  .about-philosophy {
+    position: relative;
+    padding: clamp(5.5rem, 12vh, 9rem) 5vw;
+  }
+  .about-philosophy__grid {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+  }
+  @media (min-width: 1024px) {
+    .about-philosophy__grid {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: start;
+    }
+    /* Editorial asymmetry: the text column lands below the image's top edge. */
+    .about-philosophy__text {
+      padding-top: clamp(3.5rem, 14vh, 9rem);
+    }
+  }
+  .about-philosophy__media {
+    height: clamp(22rem, 74vh, 46rem);
+  }
+  .about-philosophy__numeral {
+    top: 0;
+    right: 4vw;
+    z-index: 0;
+  }
+  .about-philosophy__title {
+    margin-top: 1.3rem;
+  }
+  .about-philosophy__rule-gold {
+    margin-top: 1.75rem;
+  }
+  .about-philosophy__desc {
+    margin-top: 1.75rem;
+    max-width: 36ch;
+  }
+
+  /* --- Section 03 — The Art of Curation ----------------------------------
+     Three image-led compositions on a 12-column field, each proportioned
+     and placed differently; text sits beneath each plate, unhurried. */
+  .about-cur {
+    position: relative;
+    padding: clamp(5.5rem, 12vh, 9rem) 5vw;
+  }
+  .about-cur__title {
+    margin-top: 1.4rem;
+  }
+  .about-cur__grid {
+    display: grid;
+    gap: clamp(3.5rem, 8vh, 5.5rem) clamp(2rem, 4vw, 4rem);
+    margin-top: clamp(3rem, 8vh, 5.5rem);
+  }
+  @media (min-width: 1024px) {
+    .about-cur__grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: clamp(1.5rem, 3vw, 3rem);
+      margin-top: clamp(4rem, 10vh, 6.5rem);
+    }
+    /* Deliberately uneven placements: left-weighted, deep offset, then a
+       mid-field landscape that returns the eye left before the close. */
+    .about-cur__item--one {
+      grid-column: 1 / span 4;
+    }
+    .about-cur__item--two {
+      grid-column: 7 / span 5;
+      padding-top: clamp(4rem, 11vh, 7.5rem);
+    }
+    .about-cur__item--three {
+      grid-column: 2 / span 5;
+    }
+  }
+  .about-cur__index {
+    margin: 1.4rem 0 0;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    color: rgba(212, 175, 55, 0.8);
+  }
+  .about-cur__name {
+    margin: 0.55rem 0 0;
+    font-family: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: clamp(1.35rem, 1.9vw, 1.8rem);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: var(--color-warm-white);
+  }
+  .about-cur__line {
+    margin: 0.6rem 0 0;
+    max-width: 30ch;
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.65;
+    letter-spacing: 0.01em;
+    color: rgba(245, 240, 232, 0.55);
+  }
+  .about-cur__rule {
+    width: 40px;
+    margin-top: 1rem;
+    height: 1px;
+    background: rgba(212, 175, 55, 0.4);
+  }
+
+  /* --- Section 04 — The Collection ---------------------------------------
+   Closing plate: strong centred-left typography above a full-bleed
+   architectural image that runs edge to edge before the footer. */
+  .about-collection {
+    position: relative;
+    padding: clamp(5.5rem, 13vh, 9.5rem) 0 clamp(4rem, 9vh, 6.5rem);
+  }
+  .about-collection__head {
+    padding: 0 5vw;
+  }
+  .about-collection__title {
+    margin-top: 1.4rem;
+  }
+  .about-collection__rule-gold {
+    margin-top: 1.75rem;
+  }
+  .about-collection__desc {
+    margin-top: 1.75rem;
+    max-width: 38ch;
+  }
+  .about-collection__media {
+    margin-top: clamp(3rem, 8vh, 5rem);
+    height: clamp(22rem, 64vh, 44rem);
+  }
+  .about-collection__caption {
+    margin: 0.85rem 5vw 0;
+  }
+}
+
+/* --- Contact: the private enquiry destination ---------------------------
+   Three sections on obsidian — opening statement, enquiry form, closing
+   statement — drawn from the About editorial vocabulary: serif display
+   titles, hairline masks, champagne rules, warm-white data lines. The form
+   is the project's first: its controls are styled here once, on the shared
+   tokens. Hidden initial states exist only inside gsap.context, so every
+   element renders complete whenever the animations do not run. ----------- */
+@layer components {
+  .contact {
+    position: relative;
+    background: var(--color-obsidian);
+    color: var(--color-warm-white);
+  }
+
+  /* Shared Contact vocabulary */
+  .contact__eyebrow {
+    @apply m-0 font-display text-[11px] font-bold uppercase;
+    letter-spacing: 0.35em;
+    color: var(--color-champagne);
+  }
+  .contact__rule-gold {
+    width: 105px;
+    height: 1px;
+    background: var(--color-champagne);
+    opacity: 0.65;
+    transform-origin: left center;
+  }
+  .contact__title-line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+  }
+  .contact__title-line > span {
+    display: block;
+  }
+
+  /* --- 01 — the opening statement -----------------------------------------
+     Editorial plate: the headline holds the left column while the
+     architectural media plate anchors the right under a dark veil. Top
+     padding clears the sticky navbar, mirroring .about-hero. */
+  .contact-hero {
+    position: relative;
+    padding: clamp(7rem, 16dvh, 11rem) 5vw clamp(5rem, 12vh, 9rem);
+  }
+  .contact-hero__grid {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+    margin-top: clamp(2.25rem, 6vh, 4.25rem);
+  }
+  @media (min-width: 1024px) {
+    .contact-hero__grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      align-items: end;
+    }
+  }
+  .contact-hero__title {
+    margin: 1.3rem 0 0;
+    font-family: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: clamp(2rem, 5vw, 4.25rem);
+    font-weight: 400;
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    color: var(--color-warm-white);
+  }
+  .contact-hero__rule-gold {
+    margin-top: 1.75rem;
+  }
+  .contact-hero__lead {
+    margin: 1.6rem 0 0;
+    max-width: 40ch;
+    font-size: clamp(0.95rem, 1.15vw, 1.05rem);
+    font-weight: 300;
+    line-height: 1.75;
+    letter-spacing: 0.015em;
+    color: rgba(245, 240, 232, 0.62);
+  }
+  .contact-hero__media {
+    position: relative;
+    overflow: hidden;
+    height: clamp(20rem, 62vh, 42rem);
+    background: rgba(245, 240, 232, 0.04);
+  }
+  .contact-hero__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+  /* The dark treatment: a bottom-weighted obsidian gradient that keeps the
+     veiled plate on the page's palette, with a left-edge blend toward the
+     text column so the plate never reads as pasted-on. */
+  .contact-hero__media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(10, 10, 15, 0.5) 0%,
+        rgba(10, 10, 15, 0.2) 45%,
+        rgba(10, 10, 15, 0.62) 100%
+      ),
+      linear-gradient(to right, rgba(10, 10, 15, 0.35) 0%, rgba(10, 10, 15, 0) 45%);
+  }
+  .contact-hero__caption {
+    margin: 0.85rem 0 0;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.38);
+  }
+
+  /* --- 02 — the enquiry destination ---------------------------------------
+     Intro column carries the editorial voice; the form carries every
+     control. Fields pair in two columns from 640px up; the long property
+     select and the message stay full width. */
+  .contact-enquiry {
+    position: relative;
+    padding: clamp(5.5rem, 12vh, 9rem) 5vw;
+  }
+  .contact-enquiry__grid {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+  }
+  @media (min-width: 1024px) {
+    .contact-enquiry__grid {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+      align-items: start;
+    }
+    /* Editorial asymmetry: the intro column sits below the field grid's top. */
+    .contact-enquiry__intro {
+      padding-top: clamp(2rem, 9vh, 6rem);
+    }
+  }
+  .contact-enquiry__title {
+    margin: 1.3rem 0 0;
+    font-family: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: clamp(1.9rem, 3.6vw, 3rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--color-warm-white);
+  }
+  .contact-enquiry__rule-gold {
+    margin-top: 1.75rem;
+  }
+  .contact-enquiry__support {
+    margin: 1.6rem 0 0;
+    max-width: 36ch;
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+    font-weight: 300;
+    line-height: 1.7;
+    letter-spacing: 0.01em;
+    color: rgba(207, 187, 142, 0.6);
+  }
+
+  /* The form. color-scheme dark: native widgets (selects, autofill) render
+     on the page's palette instead of browser-white. */
+  .contact-form {
+    display: grid;
+    gap: 1.5rem;
+    color-scheme: dark;
+  }
+  .contact-form__row {
+    display: grid;
+    gap: 1.5rem 2rem;
+    min-width: 0;
+  }
+  @media (min-width: 640px) {
+    .contact-form__row--pair {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .contact-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    min-width: 0;
+  }
+  .contact-form__label {
+    @apply font-display text-[11px] font-bold uppercase;
+    letter-spacing: 0.22em;
+    color: rgba(245, 240, 232, 0.55);
+  }
+  .contact-form__req {
+    color: var(--color-champagne);
+  }
+  .contact-form__optional {
+    margin-left: 0.35rem;
+    text-transform: none;
+    font-weight: 500;
+    color: rgba(245, 240, 232, 0.55);
+  }
+  /* 1rem text keeps every control above the 16px mobile-zoom threshold. */
+  .contact-form__control {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    /* background-color, not the background shorthand: the select variant
+       carries a background-image (chevron), which a shorthand would wipe. */
+    background-color: rgba(245, 240, 232, 0.04);
+    border: 1px solid rgba(245, 240, 232, 0.16);
+    border-radius: 2px;
+    color: var(--color-warm-white);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    caret-color: var(--color-champagne);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+  .contact-form__control::placeholder {
+    color: rgba(245, 240, 232, 0.28);
+  }
+  .contact-form__control:hover {
+    border-color: rgba(245, 240, 232, 0.3);
+  }
+  .contact-form__control:focus {
+    border-color: rgba(212, 175, 55, 0.75);
+    background-color: rgba(245, 240, 232, 0.06);
+  }
+  /* Keep browser autofill dark; without it Chrome paints its own light fill.
+     The hover/focus/active states re-apply the fill — Chrome can repaint
+     through them unless they are covered too. */
+  .contact-form__control:-webkit-autofill,
+  .contact-form__control:-webkit-autofill:hover,
+  .contact-form__control:-webkit-autofill:focus,
+  .contact-form__control:-webkit-autofill:active {
+    -webkit-text-fill-color: var(--color-warm-white);
+    -webkit-box-shadow: 0 0 0 1000px #15151d inset;
+    transition: background-color 9999s ease-out;
+  }
+  .contact-form__control--select {
+    appearance: none;
+    padding-right: 2.75rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23f5f0e8' stroke-opacity='0.55' stroke-width='1.25'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    cursor: pointer;
+  }
+  .contact-form__control--textarea {
+    min-height: 9rem;
+    resize: vertical;
+  }
+  .contact-form__control--invalid {
+    border-color: rgba(224, 138, 114, 0.65);
+  }
+  .contact-form__error {
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    color: #e08a72;
+  }
+  /* Live status: a hairline-bordered notice in the brand's data-line voice.
+     Mounted permanently and empty when inactive — the visible chrome lives
+     in the kind modifiers so an empty region takes up no space. */
+  .contact-form__status {
+    margin: 0;
+    max-width: 52ch;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: rgba(245, 240, 232, 0.78);
+  }
+  .contact-form__status--error,
+  .contact-form__status--ready {
+    padding: 1rem 1.25rem;
+    border-left: 1px solid transparent;
+    background: rgba(245, 240, 232, 0.03);
+  }
+  .contact-form__status--error {
+    border-left-color: rgba(224, 138, 114, 0.85);
+  }
+  .contact-form__status--ready {
+    border-left-color: var(--color-champagne);
+  }
+  .contact-form__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.1rem;
+    margin-top: 0.25rem;
+  }
+  /* Submit CTA: AURELIA's champagne underline-draw, stated as a button. */
+  .contact-form__submit {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0;
+    border: 0;
+    background: none;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--color-champagne);
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  .contact-form__submit::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 1px;
+    background: var(--color-champagne);
+    transition: width 0.35s ease;
+  }
+  .contact-form__submit:hover::after,
+  .contact-form__submit:focus-visible::after {
+    width: 100%;
+  }
+  .contact-form__submit-arrow {
+    transition: transform 0.35s ease;
+  }
+  .contact-form__submit:hover .contact-form__submit-arrow {
+    transform: translateX(4px);
+  }
+  .contact-form__note {
+    margin: 0;
+    max-width: 46ch;
+    font-size: 0.8rem;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+    color: rgba(245, 240, 232, 0.55);
+  }
+
+  /* --- 03 — the closing statement -----------------------------------------
+     Quiet composition: eyebrow, one serif statement, one champagne rule.
+     Bottom padding stays light so the section resolves into the shared
+     Footer's champagne hairline directly. */
+  .contact-closing {
+    position: relative;
+    padding: clamp(6rem, 14vh, 10rem) 5vw clamp(3rem, 8vh, 5rem);
+  }
+  .contact-closing__title {
+    margin: 1.4rem 0 0;
+    max-width: 22ch;
+    font-family: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: clamp(2.1rem, 4.5vw, 3.75rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--color-warm-white);
+    text-wrap: balance;
+  }
+  .contact-closing__rule-gold {
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 767px) {
+    .contact-hero__media {
+      height: clamp(16rem, 48vh, 28rem);
+    }
+    .contact-hero {
+      padding-top: clamp(6.5rem, 15dvh, 10rem);
+    }
+    .contact-enquiry {
+      padding-top: clamp(4.5rem, 10vh, 7rem);
+    }
+    /* Keeps "Some conversations lead" on one line down to ~320px, mirroring
+       the enquiries title's mobile clamp. */
+    .contact-closing__title {
+      font-size: clamp(1.8rem, 7.5vw, 2.6rem);
+    }
+    .contact-form__status {
+      max-width: none;
+    }
+  }
+}
